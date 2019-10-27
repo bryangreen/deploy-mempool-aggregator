@@ -2,9 +2,9 @@ version: '3.7'
 services:
   app:
     build: .
-    container_name: publisherapp
+    container_name: aggregatorapp
     ports:
       - "10902:10902"
   db:
     image: "redis:latest"
-    container_name: publisherdb
+    container_name: aggregatordb

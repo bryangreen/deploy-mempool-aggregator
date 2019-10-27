@@ -1,7 +1,7 @@
 {
   "name": "mempool-aggregator",
   "version": "1.0.0",
-  "description": "RADAR DEPLOY WT: Mempool Aggregator",
+  "description": "RADAR WT: Mempool Aggregator",
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/bryangreen/blockchain-playground#readme",
   "devDependencies": {
+    "@types/ioredis": "^4.0.18",
     "@types/socket.io": "^2.1.4",
     "@types/socket.io-client": "^1.4.32",
     "@types/socket.io-redis": "^1.0.25",
@@ -24,8 +25,8 @@
   },
   "dependencies": {
     "chalk": "^2.4.2",
+    "ioredis": "^4.14.1",
     "socket.io": "^2.3.0",
-    "socket.io-client": "^2.3.0",
-    "socket.io-redis": "^5.2.0"
+    "socket.io-client": "^2.3.0"
   }
 }

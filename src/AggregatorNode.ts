@@ -3,9 +3,9 @@ import http from 'http';
 import socketIo, { Socket } from 'socket.io';
 import ioClient from 'socket.io-client';
 
-import RedisStore from '@mempool/mempool-shared/dist/RedisStore';
-import TxStore from '@mempool/mempool-shared/dist/TxStore';
-import { PendingTransaction } from '@mempool/mempool-shared/dist/PendingTransaction';
+import RedisStore from "./shared/RedisStore";
+import TxStore from "./shared/TxStore";
+import { PendingTransaction } from "./shared/PendingTransaction";
 
 export default class AggregatorNode {
   readonly verboseLogs = false;
@@ -22,7 +22,7 @@ export default class AggregatorNode {
 
   constructor() {
     this.listenServer = 'http://127.0.0.1:10902/';
-    this.redisStore = new RedisStore(this.aggregatorRedis);
+    this.redisStore = new RedisStore({ port: 6379, host: 'aggregatordb' });
   }
 
   static log(statement: string) {
