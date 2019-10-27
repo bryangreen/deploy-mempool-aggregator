@@ -1,9 +1,10 @@
-version: '3.7'
+version: '3.1'
 services:
   app:
     build: .
     container_name: aggregatorapp
     ports:
+      - "9000:9000"
       - "10902:10902"
   db:
     image: "redis:latest"

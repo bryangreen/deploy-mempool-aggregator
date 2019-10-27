@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e5a707e8-e838-420b-b8a5-5483d1df7065" name="Default Changelist" comment="Initial revision of aggregator (from monorepo)">
+    <list default="true" id="e5a707e8-e838-420b-b8a5-5483d1df7065" name="Default Changelist" comment="Adding docker support, some cleanup for shared code">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AggregatorNode.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/AggregatorNode.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/RedisStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/RedisStore.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,7 +53,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1572205954076</updated>
-      <workItem from="1572205956226" duration="1229000" />
+      <workItem from="1572205956226" duration="7614000" />
     </task>
     <task id="LOCAL-00001" summary="Initial revision of aggregator (from monorepo)">
       <created>1572207706816</created>
@@ -65,7 +62,14 @@
       <option name="project" value="LOCAL" />
       <updated>1572207706816</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Adding docker support, some cleanup for shared code">
+      <created>1572208073635</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1572208073635</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -84,12 +88,13 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Initial revision of aggregator (from monorepo)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Initial revision of aggregator (from monorepo)" />
+    <MESSAGE value="Adding docker support, some cleanup for shared code" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding docker support, some cleanup for shared code" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="-1035" y="-266" key="Vcs.Push.Dialog.v2" timestamp="1572207728141">
+    <state x="-1035" y="-266" key="Vcs.Push.Dialog.v2" timestamp="1572208075868">
       <screen x="-2560" y="-806" width="2560" height="1600" />
     </state>
-    <state x="-1035" y="-266" key="Vcs.Push.Dialog.v2/0.0.1920.1200/1920.-1761.1600.2560/-2560.-806.2560.1600@-2560.-806.2560.1600" timestamp="1572207728141" />
+    <state x="-1035" y="-266" key="Vcs.Push.Dialog.v2/0.0.1920.1200/1920.-1761.1600.2560/-2560.-806.2560.1600@-2560.-806.2560.1600" timestamp="1572208075868" />
   </component>
 </project>

@@ -8,11 +8,9 @@ import TxStore from "./shared/TxStore";
 import { PendingTransaction } from "./shared/PendingTransaction";
 
 export default class AggregatorNode {
-  readonly verboseLogs = false;
+  readonly verboseLogs = true;
 
   readonly listenServer: string;
-
-  readonly aggregatorRedis = 6390;
 
   readonly storePort = 6350;
 
@@ -21,7 +19,7 @@ export default class AggregatorNode {
   readonly redisStore: RedisStore;
 
   constructor() {
-    this.listenServer = 'http://127.0.0.1:10902/';
+    this.listenServer = 'http://0.0.0.0:10902';
     this.redisStore = new RedisStore({ port: 6379, host: 'aggregatordb' });
   }
 
@@ -35,13 +33,13 @@ export default class AggregatorNode {
   listen() {
     const store = new TxStore(this.redisStore);
 
-    AggregatorNode.log(`listening on: ${this.listenServer}`);
+    AggregatorNode.log(`listen -> on: ${this.listenServer}`);
     const io = ioClient(this.listenServer, {
       path: '/socket.io',
     });
 
     io.on('connect', () => {
-      AggregatorNode.log('connection made');
+      AggregatorNode.log('listen -> connection made');
 
       // Connection made - time to receive messages
       io.on('message', (message: string) => {
@@ -53,9 +51,9 @@ export default class AggregatorNode {
         store.save(tx);
       });
     }).on('close', () => {
-      AggregatorNode.log('close');
+      AggregatorNode.log('listen -> close');
     }).on('error', () => {
-      AggregatorNode.log('error');
+      AggregatorNode.log('listen -> error');
     });
   }
 
@@ -65,61 +63,56 @@ export default class AggregatorNode {
    */
   emit() {
     const store = new TxStore(this.redisStore);
-    const httpServer = http.createServer().listen(this.storePort, '127.0.0.1');
+    const httpServer = http.createServer().listen(this.storePort, '0.0.0.0');
 
     const ioListen = socketIo(httpServer, {
       path: '/',
     });
-    AggregatorNode.log('Emitting stored tx');
+    AggregatorNode.log('emit -> stored tx');
 
     ioListen.on('connection', (socket: Socket) => {
       AggregatorNode.log('WS connection success!');
 
       store.load()
         .subscribe({
-          next(value) {
+          next(value: string) {
             socket.send(value);
-            AggregatorNode.log(`Message sent: ${(<PendingTransaction>JSON.parse(value)).hash}`);
+            AggregatorNode.log(`emit -> Message sent: ${(<PendingTransaction>JSON.parse(value)).hash}`);
           },
         });
     });
   }
 
+  /**
+   * Broadcasts emitted events
+   */
   broadcast() {
     const store = new TxStore(this.redisStore);
-    const httpServer = http.createServer().listen(this.broadcastPort, '127.0.0.1');
+    const httpServer = http.createServer().listen(this.broadcastPort, '0.0.0.0');
 
     const ioListen = socketIo(httpServer, {
       path: '/txspending',
+
     });
-    AggregatorNode.log('Broadcasting stored tx');
+    AggregatorNode.log('broadcast -> initing broadcast of stored tx');
 
     ioListen.on('connection', (socket: Socket) => {
-      AggregatorNode.log('WS broadcast connection success!');
+      AggregatorNode.log('broadcast -> socket connection success');
 
       store.load()
         .subscribe({
-          next(value) {
+          next(value: string) {
             socket.send(value);
             if (false) {
               AggregatorNode.log(`message sent: ${(<PendingTransaction>JSON.parse(value)).hash}`);
             }
           },
           complete() {
-            AggregatorNode.log('Closed broadcast subscription');
+            AggregatorNode.log('broadcast -> closed broadcast subscription');
           },
         });
     });
     // .on("disconnect", ());
   }
 
-  // listen on an open socket
-  // allow connections
-  // accept stream of data
-
-  // parse data
-  // store in redis
-
-  // allow for connections to system (via web socket)
-  // stream out data from redis
 }
