@@ -8,6 +8,7 @@ import { IPendingTransaction } from "./shared/IPendingTransaction";
 
 export default class AggregatorNode {
   readonly verboseLogs = false;
+  readonly showStats = false;
 
   readonly aggregateListener: string = 'http://host.docker.internal:10902/';
 
@@ -51,6 +52,10 @@ export default class AggregatorNode {
         // Save all of the incoming transactions on the redis key/value store
         // This will de-dup the transactions if they're received from multiple nodes.
         this.txStore.save(tx);
+
+        if(this.showStats) {
+          console.log(`aggregate -> tx received ${this.txStore.txReceived}, tx saved ~${this.txStore.txSaved}`)
+        }
       });
 
     }).on('close', () => {
@@ -91,7 +96,7 @@ export default class AggregatorNode {
     ioListen.on('connection', (socket: Socket) => {
       console.log(`broadcast -> ws connect from ${socket.conn.remoteAddress}`);
 
-      this.txStore.load()
+      this.txStore.load(true)
         .subscribe({
           next(value: string) {
             socket.send(value);

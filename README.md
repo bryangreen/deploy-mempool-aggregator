@@ -18,6 +18,7 @@ Connect your websocket client to port 9000.
 
 ## TODO
 - Some of the same TODOs as Publisher (unit tests, config files, shared code, etc.)
+- Use REDIS pub/sub model for websocket connection so that any websocket connection can retrieve a stream of txs and duplicates are not sent to the client.
 
 
 ### Some ideas

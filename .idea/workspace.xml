@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e5a707e8-e838-420b-b8a5-5483d1df7065" name="Default Changelist" comment="Removed the entire emit method because it didn't have a use, more details around ws broadcast connections">
+    <list default="true" id="e5a707e8-e838-420b-b8a5-5483d1df7065" name="Default Changelist" comment="Add options to TxStore.ts from Publisher">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AggregatorNode.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/AggregatorNode.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -52,7 +53,7 @@
       <option name="presentableId" value="Default" />
       <updated>1572205954076</updated>
       <workItem from="1572205956226" duration="16560000" />
-      <workItem from="1572230222719" duration="13588000" />
+      <workItem from="1572230222719" duration="25631000" />
     </task>
     <task id="LOCAL-00001" summary="Initial revision of aggregator (from monorepo)">
       <created>1572207706816</created>
@@ -124,7 +125,28 @@
       <option name="project" value="LOCAL" />
       <updated>1572268235568</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Cleanup around broadcast">
+      <created>1572268708095</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1572268708095</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Add options to TxStore.ts from Publisher">
+      <created>1572282737675</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1572282737675</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Adding in pub/sub model for AggregatorNode.ts to allow for multiple ws clients and prevent dups from being sent">
+      <created>1572282787515</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1572282787515</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -155,13 +177,21 @@
     <MESSAGE value=".gitignore on .idea" />
     <MESSAGE value="Improve README.md, cleanup AggregatorNode.ts, replace TxStore.ts" />
     <MESSAGE value="Removed the entire emit method because it didn't have a use, more details around ws broadcast connections" />
-    <option name="LAST_COMMIT_MESSAGE" value="Removed the entire emit method because it didn't have a use, more details around ws broadcast connections" />
+    <MESSAGE value="Cleanup around broadcast" />
+    <MESSAGE value="Add options to TxStore.ts from Publisher" />
+    <MESSAGE value="Adding in pub/sub model for AggregatorNode.ts to allow for multiple ws clients and prevent dups from being sent" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding in pub/sub model for AggregatorNode.ts to allow for multiple ws clients and prevent dups from being sent" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="-1035" y="-266" key="Vcs.Push.Dialog.v2" timestamp="1572268237704">
+    <state x="-1133" y="-404" key="CommitChangelistDialog2" timestamp="1572282787572">
       <screen x="-2560" y="-806" width="2560" height="1600" />
     </state>
-    <state x="-1035" y="-266" key="Vcs.Push.Dialog.v2/0.0.1920.1200/1920.-1761.1600.2560/-2560.-806.2560.1600@-2560.-806.2560.1600" timestamp="1572268237704" />
+    <state x="-1133" y="-404" key="CommitChangelistDialog2/0.0.1920.1200/1920.-1761.1600.2560/-2560.-806.2560.1600@-2560.-806.2560.1600" timestamp="1572282787572" />
+    <state x="-1035" y="-266" key="Vcs.Push.Dialog.v2" timestamp="1572282742582">
+      <screen x="-2560" y="-806" width="2560" height="1600" />
+    </state>
+    <state x="-1035" y="-266" key="Vcs.Push.Dialog.v2/0.0.1920.1200/1920.-1761.1600.2560/-2560.-806.2560.1600@-2560.-806.2560.1600" timestamp="1572282742582" />
     <state x="-1035" y="-251" key="Vcs.Push.Dialog.v2/0.23.1920.1177/1920.-1738.1600.2537/-2560.-783.2560.1577@-2560.-783.2560.1577" timestamp="1572256368453" />
+    <state x="-1035" y="-266" key="Vcs.Push.Dialog.v2/0.23.1920.1177/1920.-1738.1600.2537/-2560.-806.2560.1600@-2560.-806.2560.1600" timestamp="1572269331118" />
   </component>
 </project>
