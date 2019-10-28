@@ -1,6 +1,6 @@
 import AggregatorNode from './AggregatorNode';
 
 const aggregatorNode = new AggregatorNode();
-aggregatorNode.listen();
+aggregatorNode.listenIncomingTxs();
 aggregatorNode.emit();
-aggregatorNode.broadcast();
+aggregatorNode.broadcastTxStream();

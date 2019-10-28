@@ -3,9 +3,8 @@ services:
   app:
     build: .
     container_name: aggregatorapp
-    network_mode: host
     ports:
-      - "9000:9000"
+      - "9000:9000" # ws broadcasting port for stream on unique txs
     expose:
       - 10902
 #    external_links:

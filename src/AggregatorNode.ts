@@ -2,33 +2,36 @@ import http from 'http';
 import socketIo, { Socket } from 'socket.io';
 import ioClient from 'socket.io-client';
 
-import RedisStore from "./shared/RedisStore";
+import RedisConnection from "./shared/RedisConnection";
 import TxStore from "./shared/TxStore";
-import { PendingTransaction } from "./shared/PendingTransaction";
+import { IPendingTransaction } from "./shared/IPendingTransaction";
 
 export default class AggregatorNode {
   readonly verboseLogs = true;
 
-  readonly listenServer: string;
+  readonly listenServer: string = 'http://0.0.0.0:10902/';
 
-  readonly storePort = 6350;
+  readonly dataStorePort = 6379;
+  readonly dataStoreHost = 'aggregatordb';
 
-  readonly broadcastPort = 9000;
+  readonly wsBroadcastPort = 9000;
 
-  readonly redisStore: RedisStore;
+  txStore: TxStore;
 
   constructor() {
-    this.listenServer = 'http://:10902/';
-    // this.redisStore = new RedisStore({ port: 6390, host: 'aggregatordb' });
-    this.redisStore = new RedisStore({ port: 6379, host: '0.0.0.0' });
+    const redisConnection = new RedisConnection({
+      port: this.dataStorePort,
+      host: this.dataStoreHost
+    });
+
+    this.txStore = new TxStore(redisConnection);
   }
 
   /**
-   *  Listens on a known port for connections
+   *  Listens on a known port for incoming publisher connections.
+   *  This is a websocket client connection.
    */
-  listen() {
-    const store = new TxStore(this.redisStore);
-
+  listenIncomingTxs() {
     const io = ioClient(this.listenServer, {
       path: '/',
     });
@@ -46,24 +49,35 @@ export default class AggregatorNode {
 
       // Connection made - time to receive messages
       io.on('message', (message: string) => {
-        const tx = (<PendingTransaction>JSON.parse(message));
+        // Transaction received
+        const tx = (<IPendingTransaction>JSON.parse(message));
+
         // Message received.
         if (this.verboseLogs) {
           console.log(`listen -> message received: ${tx.hash}`);
         }
-        store.save(tx);
+
+        // Save all of the incoming transactions on the redis key/value store
+        // This will de-dup the transactions if they're received from multiple nodes.
+        this.txStore.save(tx);
       });
+
     }).on('close', () => {
       console.log('listen -> close');
+
     }).on('connect_error', (error: string) => {
       console.log('listen -> connect_error ' + error);
+
     }).on('connect_timeout', (error: string) => {
       console.log('listen -> connect_timeout ' + error);
+
     }).on('disconnect', (reason: string) => {
       console.log('listen -> disconnect ' + reason);
+
     }).on('close', () => {
       console.log('listen -> close');
-    }).on('error', (error:string) => {
+
+    }).on('error', (error: string) => {
       console.log('listen -> error ' + error);
     });
   }
@@ -72,8 +86,7 @@ export default class AggregatorNode {
    *  Emits stored pending transactions
    */
   emit() {
-    const store = new TxStore(this.redisStore);
-    const httpServer = http.createServer().listen(this.storePort, '0.0.0.0');
+    const httpServer = http.createServer().listen(this.dataStorePort, '0.0.0.0');
 
     const ioListen = socketIo(httpServer, {
       path: '/',
@@ -81,24 +94,25 @@ export default class AggregatorNode {
     console.log('emit -> stored tx');
 
     ioListen.on('connection', (socket: Socket) => {
-      console.log('WS connection success!');
+      console.log('emit -> WS connection success!');
 
-      store.load()
+      this.txStore.load()
         .subscribe({
           next(value: string) {
             socket.send(value);
-            console.log(`emit -> Message sent: ${(<PendingTransaction>JSON.parse(value)).hash}`);
+            console.log(`emit -> Message sent: ${(<IPendingTransaction>JSON.parse(value)).hash}`);
           },
         });
     });
   }
 
   /**
-   * Broadcasts emitted events
+   * Broadcasts emitted events.
+   *
+   * Waits for ws connections and then streams txs from the txStore.
    */
-  broadcast() {
-    const store = new TxStore(this.redisStore);
-    const httpServer = http.createServer().listen(this.broadcastPort, '0.0.0.0');
+  broadcastTxStream() {
+    const httpServer = http.createServer().listen(this.wsBroadcastPort, '0.0.0.0');
 
     const ioListen = socketIo(httpServer, {
       path: '/txspending',
@@ -106,14 +120,14 @@ export default class AggregatorNode {
     console.log('broadcast -> initing broadcast of stored tx');
 
     ioListen.on('connection', (socket: Socket) => {
-      console.log('broadcast -> socket connection success');
+      console.log('broadcast -> ws connection success');
 
-      store.load()
+      this.txStore.load()
         .subscribe({
           next(value: string) {
             socket.send(value);
             if (false) {
-              console.log(`message sent: ${(<PendingTransaction>JSON.parse(value)).hash}`);
+              console.log(`message sent: ${(<IPendingTransaction>JSON.parse(value)).hash}`);
             }
           },
           complete() {
