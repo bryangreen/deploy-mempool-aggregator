@@ -1,4 +1,3 @@
-import chalk from 'chalk';
 import http from 'http';
 import socketIo, { Socket } from 'socket.io';
 import ioClient from 'socket.io-client';
@@ -19,12 +18,9 @@ export default class AggregatorNode {
   readonly redisStore: RedisStore;
 
   constructor() {
-    this.listenServer = 'http://0.0.0.0:10902';
-    this.redisStore = new RedisStore({ port: 6379, host: 'aggregatordb' });
-  }
-
-  static log(statement: string) {
-    console.log(chalk.bgRed.green.bold(' AGG ') + statement);
+    this.listenServer = 'http://:10902/';
+    // this.redisStore = new RedisStore({ port: 6390, host: 'aggregatordb' });
+    this.redisStore = new RedisStore({ port: 6379, host: '0.0.0.0' });
   }
 
   /**
@@ -33,30 +29,44 @@ export default class AggregatorNode {
   listen() {
     const store = new TxStore(this.redisStore);
 
-    AggregatorNode.log(`listen -> on: ${this.listenServer}`);
     const io = ioClient(this.listenServer, {
-      path: '/socket.io',
+      path: '/',
     });
 
+    // const httpServer = http.createServer().listen(10902, '0.0.0.0');
+    //
+    // const io = socketIo(httpServer, {
+    //   path: '/',
+    // });
+    console.log(`listen -> init`);
+
+
     io.on('connect', () => {
-      AggregatorNode.log('listen -> connection made');
+      console.log('listen -> connection made');
 
       // Connection made - time to receive messages
       io.on('message', (message: string) => {
         const tx = (<PendingTransaction>JSON.parse(message));
         // Message received.
         if (this.verboseLogs) {
-          AggregatorNode.log(`message received: ${tx.hash}`);
+          console.log(`listen -> message received: ${tx.hash}`);
         }
         store.save(tx);
       });
     }).on('close', () => {
-      AggregatorNode.log('listen -> close');
-    }).on('error', () => {
-      AggregatorNode.log('listen -> error');
+      console.log('listen -> close');
+    }).on('connect_error', (error: string) => {
+      console.log('listen -> connect_error ' + error);
+    }).on('connect_timeout', (error: string) => {
+      console.log('listen -> connect_timeout ' + error);
+    }).on('disconnect', (reason: string) => {
+      console.log('listen -> disconnect ' + reason);
+    }).on('close', () => {
+      console.log('listen -> close');
+    }).on('error', (error:string) => {
+      console.log('listen -> error ' + error);
     });
   }
-
 
   /**
    *  Emits stored pending transactions
@@ -68,16 +78,16 @@ export default class AggregatorNode {
     const ioListen = socketIo(httpServer, {
       path: '/',
     });
-    AggregatorNode.log('emit -> stored tx');
+    console.log('emit -> stored tx');
 
     ioListen.on('connection', (socket: Socket) => {
-      AggregatorNode.log('WS connection success!');
+      console.log('WS connection success!');
 
       store.load()
         .subscribe({
           next(value: string) {
             socket.send(value);
-            AggregatorNode.log(`emit -> Message sent: ${(<PendingTransaction>JSON.parse(value)).hash}`);
+            console.log(`emit -> Message sent: ${(<PendingTransaction>JSON.parse(value)).hash}`);
           },
         });
     });
@@ -92,23 +102,22 @@ export default class AggregatorNode {
 
     const ioListen = socketIo(httpServer, {
       path: '/txspending',
-
     });
-    AggregatorNode.log('broadcast -> initing broadcast of stored tx');
+    console.log('broadcast -> initing broadcast of stored tx');
 
     ioListen.on('connection', (socket: Socket) => {
-      AggregatorNode.log('broadcast -> socket connection success');
+      console.log('broadcast -> socket connection success');
 
       store.load()
         .subscribe({
           next(value: string) {
             socket.send(value);
             if (false) {
-              AggregatorNode.log(`message sent: ${(<PendingTransaction>JSON.parse(value)).hash}`);
+              console.log(`message sent: ${(<PendingTransaction>JSON.parse(value)).hash}`);
             }
           },
           complete() {
-            AggregatorNode.log('broadcast -> closed broadcast subscription');
+            console.log('broadcast -> closed broadcast subscription');
           },
         });
     });

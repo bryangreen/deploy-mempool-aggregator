@@ -1,12 +1,11 @@
 import ioredis from "ioredis";
-import {Readable} from "stream";
-import {Observable, Subscriber} from "rxjs";
-import chalk from "chalk";
+import { Readable } from "stream";
+import { Observable, Subscriber } from "rxjs";
 
 import RedisStore from "./RedisStore";
-import {PendingTransaction} from "./PendingTransaction";
+import { PendingTransaction } from "./PendingTransaction";
 
-class TxStore {
+export default class TxStore {
 
   static keyPrefix = "pendingTx:";
   readonly verboseLogs = false;
@@ -17,7 +16,7 @@ class TxStore {
   }
 
   log(statement: string) {
-    console.log(chalk.green(`TxStore: `) + statement);
+    console.log(`TxStore: ` + statement);
   }
 
   public save(transaction: PendingTransaction) {
@@ -97,4 +96,3 @@ class TxStore {
 
 }
 
-export default TxStore;

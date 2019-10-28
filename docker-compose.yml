@@ -1,11 +1,15 @@
-version: '3.1'
+version: '2'
 services:
   app:
     build: .
     container_name: aggregatorapp
+    network_mode: host
     ports:
       - "9000:9000"
-      - "10902:10902"
+    expose:
+      - 10902
+#    external_links:
+#      - "publisherapp"
   db:
     image: "redis:latest"
     container_name: aggregatordb

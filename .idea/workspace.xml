@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e5a707e8-e838-420b-b8a5-5483d1df7065" name="Default Changelist" comment="Adding docker support, some cleanup for shared code">
+    <list default="true" id="e5a707e8-e838-420b-b8a5-5483d1df7065" name="Default Changelist" comment="Improving comms over docker">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AggregatorNode.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/AggregatorNode.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/TxStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/TxStore.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,7 +37,7 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
+    <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -53,7 +55,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1572205954076</updated>
-      <workItem from="1572205956226" duration="7614000" />
+      <workItem from="1572205956226" duration="16560000" />
+      <workItem from="1572230222719" duration="805000" />
     </task>
     <task id="LOCAL-00001" summary="Initial revision of aggregator (from monorepo)">
       <created>1572207706816</created>
@@ -69,7 +72,14 @@
       <option name="project" value="LOCAL" />
       <updated>1572208073635</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Improving comms over docker">
+      <created>1572220343976</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1572220343976</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -80,7 +90,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
@@ -89,12 +101,13 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Initial revision of aggregator (from monorepo)" />
     <MESSAGE value="Adding docker support, some cleanup for shared code" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding docker support, some cleanup for shared code" />
+    <MESSAGE value="Improving comms over docker" />
+    <option name="LAST_COMMIT_MESSAGE" value="Improving comms over docker" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="-1035" y="-266" key="Vcs.Push.Dialog.v2" timestamp="1572208075868">
+    <state x="-1035" y="-266" key="Vcs.Push.Dialog.v2" timestamp="1572220354231">
       <screen x="-2560" y="-806" width="2560" height="1600" />
     </state>
-    <state x="-1035" y="-266" key="Vcs.Push.Dialog.v2/0.0.1920.1200/1920.-1761.1600.2560/-2560.-806.2560.1600@-2560.-806.2560.1600" timestamp="1572208075868" />
+    <state x="-1035" y="-266" key="Vcs.Push.Dialog.v2/0.0.1920.1200/1920.-1761.1600.2560/-2560.-806.2560.1600@-2560.-806.2560.1600" timestamp="1572220354231" />
   </component>
 </project>

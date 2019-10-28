@@ -15,4 +15,6 @@ COPY --chown=node:node . .
 RUN yarn &&\
  tsc
 
+EXPOSE 10902
+
 CMD node /home/node/app/dist/index.js
