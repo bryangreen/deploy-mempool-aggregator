@@ -7,9 +7,9 @@ import TxStore from "./shared/TxStore";
 import { IPendingTransaction } from "./shared/IPendingTransaction";
 
 export default class AggregatorNode {
-  readonly verboseLogs = true;
+  readonly verboseLogs = false;
 
-  readonly listenServer: string = 'http://0.0.0.0:10902/';
+  readonly listenServer: string = 'http://host.docker.internal:10902/';
 
   readonly dataStorePort = 6379;
   readonly dataStoreHost = 'aggregatordb';
@@ -36,16 +36,10 @@ export default class AggregatorNode {
       path: '/',
     });
 
-    // const httpServer = http.createServer().listen(10902, '0.0.0.0');
-    //
-    // const io = socketIo(httpServer, {
-    //   path: '/',
-    // });
-    console.log(`listen -> init`);
-
+    console.log(`listen -> init on ${this.listenServer}`);
 
     io.on('connect', () => {
-      console.log('listen -> connection made');
+      console.log(`listen -> connection made to ${this.listenServer}`);
 
       // Connection made - time to receive messages
       io.on('message', (message: string) => {

@@ -7,8 +7,16 @@ services:
       - "9000:9000" # ws broadcasting port for stream on unique txs
     expose:
       - 10902
+    networks:
+      - bridge2
 #    external_links:
 #      - "publisherapp"
   db:
     image: "redis:latest"
     container_name: aggregatordb
+
+
+
+networks:
+  bridge2:
+    external: true
