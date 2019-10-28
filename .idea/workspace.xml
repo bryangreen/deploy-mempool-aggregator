@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e5a707e8-e838-420b-b8a5-5483d1df7065" name="Default Changelist" comment="Removing expose port 10902 from docker-compose.yml as now using docker.host.internal">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="e5a707e8-e838-420b-b8a5-5483d1df7065" name="Default Changelist" comment=".gitignore on .idea">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AggregatorNode.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/AggregatorNode.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/TxStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/TxStore.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,7 +55,7 @@
       <option name="presentableId" value="Default" />
       <updated>1572205954076</updated>
       <workItem from="1572205956226" duration="16560000" />
-      <workItem from="1572230222719" duration="9348000" />
+      <workItem from="1572230222719" duration="12458000" />
     </task>
     <task id="LOCAL-00001" summary="Initial revision of aggregator (from monorepo)">
       <created>1572207706816</created>
@@ -103,7 +106,14 @@
       <option name="project" value="LOCAL" />
       <updated>1572256300345</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary=".gitignore on .idea">
+      <created>1572256365727</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1572256365727</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -131,13 +141,14 @@
     <MESSAGE value="General cleanup before tackling ws client connection again, some renaming of methods, readme.md updates" />
     <MESSAGE value="More cleanup, found to access host ip, use host.docker.internal" />
     <MESSAGE value="Removing expose port 10902 from docker-compose.yml as now using docker.host.internal" />
-    <option name="LAST_COMMIT_MESSAGE" value="Removing expose port 10902 from docker-compose.yml as now using docker.host.internal" />
+    <MESSAGE value=".gitignore on .idea" />
+    <option name="LAST_COMMIT_MESSAGE" value=".gitignore on .idea" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="-1035" y="-251" key="Vcs.Push.Dialog.v2" timestamp="1572256303293">
+    <state x="-1035" y="-251" key="Vcs.Push.Dialog.v2" timestamp="1572256368453">
       <screen x="-2560" y="-783" width="2560" height="1577" />
     </state>
     <state x="-1035" y="-266" key="Vcs.Push.Dialog.v2/0.0.1920.1200/1920.-1761.1600.2560/-2560.-806.2560.1600@-2560.-806.2560.1600" timestamp="1572220354231" />
-    <state x="-1035" y="-251" key="Vcs.Push.Dialog.v2/0.23.1920.1177/1920.-1738.1600.2537/-2560.-783.2560.1577@-2560.-783.2560.1577" timestamp="1572256303293" />
+    <state x="-1035" y="-251" key="Vcs.Push.Dialog.v2/0.23.1920.1177/1920.-1738.1600.2537/-2560.-783.2560.1577@-2560.-783.2560.1577" timestamp="1572256368453" />
   </component>
 </project>

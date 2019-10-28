@@ -9,12 +9,12 @@ import { IPendingTransaction } from "./shared/IPendingTransaction";
 export default class AggregatorNode {
   readonly verboseLogs = false;
 
-  readonly listenServer: string = 'http://host.docker.internal:10902/';
+  readonly aggregateListener: string = 'http://host.docker.internal:10902/';
 
-  readonly dataStorePort = 6379;
   readonly dataStoreHost = 'aggregatordb';
+  readonly dataStorePort = 6379;
 
-  readonly wsBroadcastPort = 9000;
+  readonly broadcastPort = 9000;
 
   txStore: TxStore;
 
@@ -31,24 +31,20 @@ export default class AggregatorNode {
    *  Listens on a known port for incoming publisher connections.
    *  This is a websocket client connection.
    */
-  listenIncomingTxs() {
-    const io = ioClient(this.listenServer, {
+  aggregate() {
+    const io = ioClient(this.aggregateListener, {
       path: '/',
     });
-
-    console.log(`listen -> init on ${this.listenServer}`);
+    console.log(`aggregate -> init on ${this.aggregateListener}`);
 
     io.on('connect', () => {
-      console.log(`listen -> connection made to ${this.listenServer}`);
+      console.log(`aggregate -> connected to ${this.aggregateListener}`);
 
-      // Connection made - time to receive messages
       io.on('message', (message: string) => {
         // Transaction received
         const tx = (<IPendingTransaction>JSON.parse(message));
-
-        // Message received.
         if (this.verboseLogs) {
-          console.log(`listen -> message received: ${tx.hash}`);
+          console.log(`aggregate -> message received: ${tx.hash}`);
         }
 
         // Save all of the incoming transactions on the redis key/value store
@@ -57,22 +53,23 @@ export default class AggregatorNode {
       });
 
     }).on('close', () => {
-      console.log('listen -> close');
+      // TODO could probably remove some of these events, useful for testing.
+      console.log('aggregate -> close');
 
     }).on('connect_error', (error: string) => {
-      console.log('listen -> connect_error ' + error);
+      console.log(`aggregate -> connect_error ${error}`);
 
     }).on('connect_timeout', (error: string) => {
-      console.log('listen -> connect_timeout ' + error);
+      console.log(`aggregate -> connect_timeout ${error}`);
 
     }).on('disconnect', (reason: string) => {
-      console.log('listen -> disconnect ' + reason);
+      console.log(`aggregate -> disconnect ${reason}`);
 
     }).on('close', () => {
-      console.log('listen -> close');
+      console.log('aggregate -> close');
 
     }).on('error', (error: string) => {
-      console.log('listen -> error ' + error);
+      console.log(`aggregate -> error ${error}`);
     });
   }
 
@@ -106,7 +103,7 @@ export default class AggregatorNode {
    * Waits for ws connections and then streams txs from the txStore.
    */
   broadcastTxStream() {
-    const httpServer = http.createServer().listen(this.wsBroadcastPort, '0.0.0.0');
+    const httpServer = http.createServer().listen(this.broadcastPort, '0.0.0.0');
 
     const ioListen = socketIo(httpServer, {
       path: '/txspending',
@@ -129,7 +126,6 @@ export default class AggregatorNode {
           },
         });
     });
-    // .on("disconnect", ());
   }
 
 }
