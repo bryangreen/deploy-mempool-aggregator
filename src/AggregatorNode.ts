@@ -103,7 +103,7 @@ export default class AggregatorNode {
             console.log('broadcast -> closed broadcast subscription');
           },
         });
-    }).on('disconnect', (socket: Socket) => {
+    }).on('disconnecting', (socket: Socket) => {
       console.log(`broadcast -> ws disconnect from ${socket.conn.remoteAddress}`);
     });
   }
