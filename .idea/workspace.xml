@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e5a707e8-e838-420b-b8a5-5483d1df7065" name="Default Changelist" comment=".gitignore on .idea">
+    <list default="true" id="e5a707e8-e838-420b-b8a5-5483d1df7065" name="Default Changelist" comment="Improve README.md, cleanup AggregatorNode.ts, replace TxStore.ts">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AggregatorNode.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/AggregatorNode.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/TxStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/TxStore.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,7 +53,7 @@
       <option name="presentableId" value="Default" />
       <updated>1572205954076</updated>
       <workItem from="1572205956226" duration="16560000" />
-      <workItem from="1572230222719" duration="12458000" />
+      <workItem from="1572230222719" duration="13328000" />
     </task>
     <task id="LOCAL-00001" summary="Initial revision of aggregator (from monorepo)">
       <created>1572207706816</created>
@@ -113,7 +111,14 @@
       <option name="project" value="LOCAL" />
       <updated>1572256365727</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Improve README.md, cleanup AggregatorNode.ts, replace TxStore.ts">
+      <created>1572267370584</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1572267370584</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -142,13 +147,14 @@
     <MESSAGE value="More cleanup, found to access host ip, use host.docker.internal" />
     <MESSAGE value="Removing expose port 10902 from docker-compose.yml as now using docker.host.internal" />
     <MESSAGE value=".gitignore on .idea" />
-    <option name="LAST_COMMIT_MESSAGE" value=".gitignore on .idea" />
+    <MESSAGE value="Improve README.md, cleanup AggregatorNode.ts, replace TxStore.ts" />
+    <option name="LAST_COMMIT_MESSAGE" value="Improve README.md, cleanup AggregatorNode.ts, replace TxStore.ts" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="-1035" y="-251" key="Vcs.Push.Dialog.v2" timestamp="1572256368453">
-      <screen x="-2560" y="-783" width="2560" height="1577" />
+    <state x="-1035" y="-266" key="Vcs.Push.Dialog.v2" timestamp="1572267373525">
+      <screen x="-2560" y="-806" width="2560" height="1600" />
     </state>
-    <state x="-1035" y="-266" key="Vcs.Push.Dialog.v2/0.0.1920.1200/1920.-1761.1600.2560/-2560.-806.2560.1600@-2560.-806.2560.1600" timestamp="1572220354231" />
+    <state x="-1035" y="-266" key="Vcs.Push.Dialog.v2/0.0.1920.1200/1920.-1761.1600.2560/-2560.-806.2560.1600@-2560.-806.2560.1600" timestamp="1572267373525" />
     <state x="-1035" y="-251" key="Vcs.Push.Dialog.v2/0.23.1920.1177/1920.-1738.1600.2537/-2560.-783.2560.1577@-2560.-783.2560.1577" timestamp="1572256368453" />
   </component>
 </project>

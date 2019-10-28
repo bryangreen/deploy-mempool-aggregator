@@ -14,6 +14,7 @@ export default class AggregatorNode {
   readonly dataStoreHost = 'aggregatordb';
   readonly dataStorePort = 6379;
 
+  readonly broadcastHost = '0.0.0.0';
   readonly broadcastPort = 9000;
 
   txStore: TxStore;
@@ -74,57 +75,36 @@ export default class AggregatorNode {
   }
 
   /**
-   *  Emits stored pending transactions
-   */
-  emit() {
-    const httpServer = http.createServer().listen(this.dataStorePort, '0.0.0.0');
-
-    const ioListen = socketIo(httpServer, {
-      path: '/',
-    });
-    console.log('emit -> stored tx');
-
-    ioListen.on('connection', (socket: Socket) => {
-      console.log('emit -> WS connection success!');
-
-      this.txStore.load()
-        .subscribe({
-          next(value: string) {
-            socket.send(value);
-            console.log(`emit -> Message sent: ${(<IPendingTransaction>JSON.parse(value)).hash}`);
-          },
-        });
-    });
-  }
-
-  /**
    * Broadcasts emitted events.
    *
    * Waits for ws connections and then streams txs from the txStore.
    */
   broadcastTxStream() {
-    const httpServer = http.createServer().listen(this.broadcastPort, '0.0.0.0');
+    const httpServer = http.createServer().listen(this.broadcastPort, this.broadcastHost);
 
     const ioListen = socketIo(httpServer, {
       path: '/txspending',
     });
-    console.log('broadcast -> initing broadcast of stored tx');
+    console.log(`broadcast -> serving tx via ws at ${this.broadcastHost}:${this.broadcastPort}`);
 
+    const that = this;
     ioListen.on('connection', (socket: Socket) => {
-      console.log('broadcast -> ws connection success');
+      console.log(`broadcast -> ws connect from ${socket.conn.remoteAddress}`);
 
       this.txStore.load()
         .subscribe({
           next(value: string) {
             socket.send(value);
-            if (false) {
-              console.log(`message sent: ${(<IPendingTransaction>JSON.parse(value)).hash}`);
+            if (that.verboseLogs) {
+              console.log(`broadcast -> message sent: ${(<IPendingTransaction>JSON.parse(value)).hash}`);
             }
           },
           complete() {
             console.log('broadcast -> closed broadcast subscription');
           },
         });
+    }).on('disconnect', (socket: Socket) => {
+      console.log(`broadcast -> ws disconnect from ${socket.conn.remoteAddress}`);
     });
   }
 
