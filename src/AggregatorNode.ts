@@ -1,3 +1,4 @@
+import config from 'config';
 import http from 'http';
 import socketIo, { Socket } from 'socket.io';
 import ioClient from 'socket.io-client';
@@ -10,20 +11,12 @@ export default class AggregatorNode {
   readonly verboseLogs = false;
   readonly showStats = false;
 
-  readonly aggregateListener: string = 'http://host.docker.internal:10902/';
-
-  readonly dataStoreHost = 'aggregatordb';
-  readonly dataStorePort = 6379;
-
-  readonly broadcastHost = '0.0.0.0';
-  readonly broadcastPort = 9000;
-
   txStore: TxStore;
 
   constructor() {
     const redisConnection = new RedisConnection({
-      port: this.dataStorePort,
-      host: this.dataStoreHost
+      port: config.get('store.port'),
+      host: config.get('store.host')
     });
 
     this.txStore = new TxStore(redisConnection);
@@ -34,13 +27,15 @@ export default class AggregatorNode {
    *  This is a websocket client connection.
    */
   aggregate() {
-    const io = ioClient(this.aggregateListener, {
-      path: '/',
+    const url:string = config.get('listener.url');
+
+    const io = ioClient(url, {
+      path: config.get('listener.path'),
     });
-    console.log(`aggregate -> init on ${this.aggregateListener}`);
+    console.log(`aggregate -> init on ${url}`);
 
     io.on('connect', () => {
-      console.log(`aggregate -> connected to ${this.aggregateListener}`);
+      console.log(`aggregate -> connected to ${url}`);
 
       io.on('message', (message: string) => {
         // Transaction received
@@ -85,12 +80,15 @@ export default class AggregatorNode {
    * Waits for ws connections and then streams txs from the txStore.
    */
   broadcastTxStream() {
-    const httpServer = http.createServer().listen(this.broadcastPort, this.broadcastHost);
+    const broadcastHost:string = config.get('broadcast.host');
+    const broadcastPort:number = config.get('broadcast.port');
+
+    const httpServer = http.createServer().listen(broadcastPort, broadcastHost);
 
     const ioListen = socketIo(httpServer, {
       path: '/txspending',
     });
-    console.log(`broadcast -> serving tx via ws at ${this.broadcastHost}:${this.broadcastPort}`);
+    console.log(`broadcast -> serving tx via ws at ${broadcastHost}:${broadcastPort}`);
 
     const that = this;
     ioListen.on('connection', (socket: Socket) => {
