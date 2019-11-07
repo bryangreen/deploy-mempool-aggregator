@@ -8,8 +8,8 @@ import TxStore from "./shared/TxStore";
 import { IPendingTransaction } from "./shared/IPendingTransaction";
 
 export default class AggregatorNode {
-  readonly verboseLogs = false;
-  readonly showStats = false;
+  readonly verboseLogs = config.get('log.level');
+  readonly showStats = config.get('log.stats');
 
   txStore: TxStore;
 
