@@ -1,0 +1,16 @@
+log:
+  level: false
+  stats: false
+
+listener:
+  url: 'http://host.docker.internal:10902/'
+  path: '/'
+
+store:
+  host: 'aggregatordb'
+  port: 6379
+
+broadcast:
+  host: '0.0.0.0'
+  port: 9000
+

@@ -17,10 +17,13 @@
   },
   "homepage": "https://github.com/bryangreen/blockchain-playground#readme",
   "devDependencies": {
+    "@types/config": "^0.0.35",
     "@types/ioredis": "^4.0.18",
     "@types/socket.io": "^2.1.4",
     "@types/socket.io-client": "^1.4.32",
     "@types/socket.io-redis": "^1.0.25",
+    "js-yaml": "^3.13.1",
+    "config": "^3.2.4",
     "rxjs": "^6.5.3",
     "typescript": "^3.6.4"
   },
